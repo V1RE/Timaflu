@@ -1,0 +1,34 @@
+// Navbar
+.navbar {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    background-color: #fffaaa;
+  }
+
+  // Buttons
+.button{
+    background-color: #fff;
+    color: #363636;
+    cursor: pointer;
+    justify-content: center;
+    padding-bottom: calc(.5em - 1px);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: calc(.5em - 1px);
+    text-align: center;
+    white-space: nowrap;
+    align-items: center;
+    border: #dbdbdb 1px solid;
+    border-radius: 4px;
+    box-shadow: none;
+    display: inline-block;
+    margin: 0 4px;
+    font-size: 1rem;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: #b5b5b5;
+        color: #363636;
+    }
+}
