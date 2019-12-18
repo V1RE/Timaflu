@@ -4,14 +4,13 @@ const mysql = require("mysql");
 const app = express();
 app.set('view engine', 'ejs')
 
-const port = 5000;
+const port = 2300;
 
 const db = mysql.createConnection({
   host: "databases.aii.avans.nl",
   user: "nmentink",
   password: "toor"
 });
-
 db.connect(err => {
   if (err) {
     throw err;
@@ -22,6 +21,13 @@ global.db = db;
 
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
+});
+
+app.use("/public", express.static(__dirname + '/public'));
+
+// Page rendering
+app.get('/', (req, res) => {
+  res.render('index', {title: 'Timaflu - Home'});
 });
 
 
