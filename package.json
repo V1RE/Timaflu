@@ -19,6 +19,7 @@
   "dependencies": {
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "gulp-sourcemaps": "^2.6.5",
     "mysql": "^2.17.1"
   },
   "devDependencies": {
