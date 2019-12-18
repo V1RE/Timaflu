@@ -4,12 +4,15 @@ const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const uglify = require("gulp-uglify-es").default;
 
+// Files to watch for build
+const watcher = ["./resources/js/**/*.js", "./resources/js/**/*.scss"];
+
 // Compile Sass to CSS and generate sourcemap
 gulp.task("sassCompile", function() {
   return gulp
     .src("./resources/sass/*.scss")
     .pipe(sourcemaps.init())
-    .pipe(sass().on("error", sass.logError))
+    .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest("./public/build/css"));
 });
@@ -37,5 +40,8 @@ gulp.task("clean", function() {
   return del("public/build/**", { force: true });
 });
 
+// Build task
+gulp.task("build", gulp.series("clean", "sassCompile", "jsCompress"));
+
 // Default task
-gulp.task("default", gulp.series("clean", "sassCompile", "jsCompress"));
+gulp.task("default", gulp.watch(watcher, gulp.series("build")));
