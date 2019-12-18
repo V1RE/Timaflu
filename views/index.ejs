@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/public/build/css/main.css" />
+  </head>
+
+  <body>
+    <p>ff testen</p>
+    <p>Hieronder komt ejs data</p>
+
+    <% if (typeof info != 'undefined') { %>
+    <h2><%= info.text %></h2>
+    <% } %>
+
+    <script src="/public/build/js/main.js"></script>
+  </body>
+</html>
