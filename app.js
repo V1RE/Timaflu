@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 
 const app = express();
+app.set('view engine', 'ejs')
 
 const port = 5000;
 
@@ -23,10 +24,11 @@ app.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
 
-db.query("SELECT * FROM mrchrzan_db2.product", function(err, dbres) {
-  if (err) {
-    throw err;
-  } else {
-    console.log(dbres);
-  }
-});
+
+// db.query("SELECT * FROM mrchrzan_db2.product", function(err, dbres) {
+//   if (err) {
+//     throw err;
+//   } else {
+//     console.log(dbres);
+//   }
+// });
