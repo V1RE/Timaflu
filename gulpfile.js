@@ -4,9 +4,6 @@ const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const uglify = require("gulp-uglify-es").default;
 
-// Files to watch for build
-const watcher = ["./resources/js/*.js", "./resources/sass/*.scss"];
-
 // Compile Sass to CSS and generate sourcemap
 gulp.task("sassCompile", function() {
   return gulp
@@ -44,6 +41,7 @@ gulp.task("clean", function() {
 gulp.task("build", gulp.series("clean", "sassCompile", "jsCompress"));
 
 // Default task
-gulp.task("default", function() {
-  gulp.watch(watcher, gulp.series("build"));
+gulp.task("default", function(){
+  gulp.watch("./resources/js/**/*.js", gulp.series("build"));
+  gulp.watch("./resources/sass/**/*.scss", gulp.series("build"));
 });

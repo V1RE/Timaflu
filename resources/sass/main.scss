@@ -1,34 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
-
-$header-font: "Lato", sans-serif;
-$body-font: "Open Sans", sans-serif;
-$primary-color: #333;
-
-body {
-  font-family: $body-font;
-  color: $primary-color;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: $header-font;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
-}
+@import '_variables';
+@import '_base';
+@import '_layout';
+@import '_components';
