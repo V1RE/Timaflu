@@ -1,9 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="public/css/main.css">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/public/build/css/main.css" />
+  </head>
 
 </head>
 
@@ -15,12 +16,13 @@
 
 
     <p>ff testen<button class="button">yeet</button><a class="button">yeet2</a></p>
+
     <p>Hieronder komt ejs data</p>
 
     <% if (typeof info != 'undefined') { %>
-        <h2><%= info.text %></h2>
+    <h2><%= info.text %></h2>
     <% } %>
 
-  <script src="public/js/main.js"></script>
-</body>
+    <script src="/public/build/js/main.js"></script>
+  </body>
 </html>
