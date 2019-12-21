@@ -34,14 +34,16 @@ gulp.task("jsUncompress", function() {
 
 // Cleans Build folder
 gulp.task("clean", function() {
-  return del("public/build/**", { force: true });
+  return del("./public/build/**", { force: true });
 });
 
 // Build task
 gulp.task("build", gulp.series("clean", "sassCompile", "jsCompress"));
 
 // Default task
-gulp.task("default", function(){
-  gulp.watch("./resources/js/**/*.js", gulp.series("build"));
-  gulp.watch("./resources/sass/**/*.scss", gulp.series("build"));
+gulp.task("default", function() {
+  gulp.watch(
+    ["./resources/js/**/*.js", "./resources/sass/**/*.scss"],
+    gulp.series("build")
+  );
 });
