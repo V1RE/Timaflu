@@ -31,6 +31,10 @@ app.get("/", (req, res) => {
   res.render("index", { title: "Timaflu - Home" });
 });
 
+app.get("/inkoop", (req, res) => {
+  res.render("inkoop", { title: "Timaflu - Home" });
+});
+
 // db.query("SELECT * FROM mrchrzan_db2.product", function(err, dbres) {
 //   if (err) {
 //     throw err;
