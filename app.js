@@ -4,7 +4,7 @@ const mysql = require("mysql");
 const app = express();
 app.set("view engine", "ejs");
 
-const port = 2300;
+const port = process.env.PORT || 2300;
 
 const db = mysql.createConnection({
   host: "databases.aii.avans.nl",
@@ -34,11 +34,3 @@ app.get("/", (req, res) => {
 app.get("/inkoop", (req, res) => {
   res.render("inkoop", { title: "Timaflu - Home" });
 });
-
-// db.query("SELECT * FROM mrchrzan_db2.product", function(err, dbres) {
-//   if (err) {
-//     throw err;
-//   } else {
-//     console.log(dbres);
-//   }
-// });

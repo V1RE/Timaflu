@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "install": "gulp build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
