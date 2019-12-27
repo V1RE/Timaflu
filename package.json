@@ -4,6 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "install": "gulp build",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,16 +19,15 @@
   },
   "homepage": "https://github.com/V1RE/Timaflu#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "gulp-sourcemaps": "^2.6.5",
-    "mysql": "^2.17.1"
-  },
-  "devDependencies": {
+    "mysql": "^2.17.1",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify-es": "^2.0.0",
     "node-sass": "^4.13.0"
   }
