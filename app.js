@@ -1,8 +1,6 @@
 const express = require("express");
 const mysql = require("mysql");
-const dotenv = require("dotenv");
-
-dotenv.config();
+require("dotenv").config();
 
 const app = express();
 app.set("view engine", "ejs");
