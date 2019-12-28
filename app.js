@@ -1,5 +1,6 @@
 const express = require("express");
 const mysql = require("mysql");
+require("dotenv").config();
 
 const app = express();
 app.set("view engine", "ejs");
@@ -7,9 +8,9 @@ app.set("view engine", "ejs");
 const port = process.env.PORT || 2300;
 
 const db = mysql.createConnection({
-  host: "databases.aii.avans.nl",
-  user: "nmentink",
-  password: "toor"
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS
 });
 
 db.connect(err => {
