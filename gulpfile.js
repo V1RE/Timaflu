@@ -37,8 +37,15 @@ gulp.task("clean", function() {
   return del("./public/build/**", { force: true });
 });
 
+// Feathericons
+gulp.task("feather", function() {
+  return gulp
+    .src("./node_modules/feather-icons/dist/**")
+    .pipe(gulp.dest("./public/build/icons"));
+});
+
 // Build task
-gulp.task("build", gulp.series("clean", "sassCompile", "jsCompress"));
+gulp.task("build", gulp.series("clean", "sassCompile", "jsCompress", "feather"));
 
 // Default task
 gulp.task("default", function() {
