@@ -1,12 +1,15 @@
 <aside class="sidebar">
     <div class="header">
         <div class="profilepicture"></div>
+        <div class="profileswitcher">
+          <a href="#" class="curprofile">Martha de Vries<i data-feather="chevron-down"></i></a>
+        </div>
     </div>
     <div class="sidebarcontent">
         <nav>
-            <ul>
-                <li><a href="/"><i data-feather="activity"></i> Overzicht</a></li>
-            </ul>
+          <ul class="sidebarmenu">
+            <%- include('menu') %>
+          </ul>
         </nav>
     </div>
 </aside>

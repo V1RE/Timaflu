@@ -56,37 +56,83 @@
   grid-area: sidebar;
 
   .header {
-    width: calc(100% - 48px);
-    min-height: 150px;
     background-image: url("/public/images/sidebarheader.jpg");
     background-size: cover;
     background-position: center;
-    padding: 24px;
+    padding: $sidebar-spacing;
 
     .profilepicture {
       height: 80px;
       width: 80px;
       border-radius: 100%;
-      background-image: url("/public/images/profilepicture.png");
+      background-image: url("/public/images/profilepicture.jpg");
       background-size: cover;
       background-position: center;
+    }
+
+    .profileswitcher {
+      margin-top: $sidebar-spacing;
+      height: 0;
+      min-height: $sidebar-spacing;
+
+      .curprofile {
+        font-family: $sidebar-font;
+        font-size: 14px;
+        line-height: 24px;
+        color: white;
+        display: block;
+        position: relative;
+        text-decoration: none;
+        padding-right: $sidebar-spacing + $icon-spacing;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        svg {
+          display: inline-block;
+          vertical-align: middle;
+          position: absolute;
+          right: 0;
+        }
+      }
     }
   }
 
   .sidebarcontent {
-    a {
-      color: white;
-      text-decoration: none;
-      vertical-align: middle;
-      display: inline-block;
-      padding: 10px;
+    padding: $sidebar-spacing;
+    font-family: $sidebar-font;
+    font-size: 14px;
+    line-height: 24px;
 
-      svg {
-        display: inline-block;
-        vertical-align: middle
+    ul.sidebarmenu {
+      li {
+        color: white;
+        margin-bottom: $sidebar-spacing;
+
+        a {
+          color: inherit;
+          text-decoration: none;
+          display: inline-block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          svg {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: $icon-spacing;
+          }
+        }
+
+        &.active {
+          color: $brand-primary;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
       }
     }
-  } 
+  }
 }
 
 // Main
@@ -96,7 +142,7 @@ main {
 
 .wrapper {
   display: grid;
-  grid-template-columns: 425px 1fr;
+  grid-template-columns: 275px 1fr;
   grid-template-rows: 100%;
   grid-template-areas: "sidebar main";
   height: 100vh;
