@@ -1,6 +1,7 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const mysql = require("mysql");
-const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
@@ -31,9 +32,25 @@ app.use("/public", express.static(__dirname + "/public"));
 
 // Page rendering
 app.get("/", (req, res) => {
-  res.render("index", { title: "Timaflu - Home" });
+  res.render("index", {
+    title: "Timaflu - Overzicht",
+    menu: menu,
+    active: path.normalize(req.path)
+  });
 });
 
 app.get("/inkoop", (req, res) => {
-  res.render("inkoop", { title: "Timaflu - Home" });
+  res.render("inkoop", {
+    title: "Timaflu - Inkoop",
+    menu: menu,
+    active: path.normalize(req.path)
+  });
 });
+
+var menu = [
+  { href: "/", title: "Overzicht", icon: "activity" },
+  { href: "/inkoop", title: "Inkoop", icon: "log-in" },
+  { href: "/verkoop", title: "Verkoop", icon: "log-out" },
+  { href: "/facturering", title: "Facturering", icon: "trending-up" },
+  { href: "/magazijn", title: "Magazijn", icon: "package" }
+];

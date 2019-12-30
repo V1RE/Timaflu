@@ -1,0 +1,5 @@
+<% menu.forEach(menuitem => { %>
+  <li <% if (active.replace(/\/$/, "") == menuitem.href.replace(/\/$/, "")) { %>class="active"<% } %>>
+    <a href="<%- menuitem.href %>"><i data-feather="<%- menuitem.icon %>"></i><%= menuitem.title %></a>
+  </li>
+<% }); %>

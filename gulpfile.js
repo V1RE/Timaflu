@@ -44,8 +44,31 @@ gulp.task("feather", function() {
     .pipe(gulp.dest("./public/build/icons"));
 });
 
+gulp.task("jquery", function() {
+  return gulp
+    .src("./node_modules/jquery/dist/jquery.min.js")
+    .pipe(gulp.dest("./public/build/js"));
+});
+
+gulp.task("cookies", function() {
+  return gulp
+    .src("./node_modules/js-cookie/src/js.cookie.js")
+    .pipe(uglify())
+    .pipe(gulp.dest("./public/build/js"));
+});
+
 // Build task
-gulp.task("build", gulp.series("clean", "sassCompile", "jsCompress", "feather"));
+gulp.task(
+  "build",
+  gulp.series(
+    "clean",
+    "sassCompile",
+    "jsCompress",
+    "feather",
+    "jquery",
+    "cookies"
+  )
+);
 
 // Default task
 gulp.task("default", function() {
