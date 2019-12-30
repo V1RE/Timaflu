@@ -54,26 +54,35 @@
   box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.18),
     0px 5.5px 5px rgba(0, 0, 0, 0.24);
   grid-area: sidebar;
+  padding-bottom: $sidebar-spacing * 2;
+  position: relative;
+  transition: all 1s;
+  min-width: 275px;
+  width: 72px;
 
   .header {
     background-image: url("/public/images/sidebarheader.jpg");
     background-size: cover;
     background-position: center;
     padding: $sidebar-spacing;
+    transition: all 1s;
 
     .profilepicture {
       height: 80px;
       width: 80px;
-      border-radius: 100%;
+      border-radius: 80px;
       background-image: url("/public/images/profilepicture.jpg");
       background-size: cover;
       background-position: center;
+      transition: all 1s;
     }
 
     .profileswitcher {
       margin-top: $sidebar-spacing;
       height: 0;
       min-height: $sidebar-spacing;
+      overflow: hidden;
+      transition: all 1s;
 
       .curprofile {
         font-family: $sidebar-font;
@@ -105,6 +114,8 @@
     line-height: 24px;
 
     ul.sidebarmenu {
+      overflow: hidden;
+
       li {
         color: white;
         margin-bottom: $sidebar-spacing;
@@ -133,6 +144,21 @@
       }
     }
   }
+
+  .bottom-icons {
+    position: absolute;
+    bottom: 0;
+    padding: $sidebar-spacing;
+    padding-top: 0;
+
+    .feather {
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+      color: white;
+      margin-right: $sidebar-spacing;
+    }
+  }
 }
 
 // Main
@@ -141,9 +167,27 @@ main {
 }
 
 .wrapper {
-  display: grid;
-  grid-template-columns: 275px 1fr;
-  grid-template-rows: 100%;
-  grid-template-areas: "sidebar main";
+  display: flex;
   height: 100vh;
+
+  &.closed {
+    .sidebar {
+      min-width: 72px;
+
+      .header {
+        padding: 0;
+
+        .profilepicture {
+          border-radius: 0;
+          height: 72px;
+          width: 72px;
+        }
+
+        .profileswitcher {
+          min-height: 0;
+          margin: 0;
+        }
+      }
+    }
+  }
 }
