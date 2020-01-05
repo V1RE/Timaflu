@@ -45,7 +45,24 @@ app.use(/^\/(?!login).*/, function(req, res, next) {
     res.redirect("/login");
   } else {
     console.log(medewerkerID);
-    next();
+    getMedewerkers(function(medewerkers) {
+      curmedewerker = medewerkers.find(function(findmw) {
+        return findmw.idWerknemer == req.cookies.medewerkerID;
+      });
+
+      if (!curmedewerker) {
+        res.clearCookie("medewerkerID");
+        res.redirect("/login");
+      } else {
+        res.locals.data = {
+          medewerkers: medewerkers,
+          curmedewerker: curmedewerker,
+          active: path.normalize(req.path),
+          menu: menu
+        };
+        next();
+      }
+    });
   }
 });
 
@@ -53,7 +70,7 @@ app.use(/^\/(?!login).*/, function(req, res, next) {
 app.get("/login", (req, res) => {
   getMedewerkers(function(medewerkers) {
     res.render("login", {
-      title: "Timaflu - Login",
+      title: "Login",
       medewerkers: medewerkers
     });
   });
@@ -61,31 +78,16 @@ app.get("/login", (req, res) => {
 
 // Page rendering
 app.get("/", (req, res) => {
-  getMedewerkers(function(medewerkers) {
-    curmedewerker = medewerkers.find(function(findmw) {
-      return findmw.idWerknemer == req.cookies.medewerkerID;
-    });
-
-    if (!curmedewerker) {
-      res.clearCookie("medewerkerID");
-      res.redirect("/login");
-    } else {
-      res.render("index", {
-        title: "Timaflu - Overzicht",
-        menu: menu,
-        active: path.normalize(req.path),
-        medewerkers: medewerkers,
-        curmedewerker: curmedewerker
-      });
-    }
+  res.render("index", {
+    title: "Overzicht",
+    data: res.locals.data
   });
 });
 
 app.get("/inkoop", (req, res) => {
   res.render("inkoop", {
-    title: "Timaflu - Inkoop",
-    menu: menu,
-    active: path.normalize(req.path)
+    title: "Inkoop",
+    data: res.locals.data
   });
 });
 

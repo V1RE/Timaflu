@@ -1,5 +1,5 @@
-<% menu.forEach(menuitem => { %>
-  <li <% if (active.replace(/\/$/, "") == menuitem.href.replace(/\/$/, "")) { %>class="active"<% } %>>
+<% data.menu.forEach(menuitem => { %>
+  <li <% if (title == menuitem.title) { %>class="active"<% } %>>
     <a href="<%- menuitem.href %>"><i data-feather="<%- menuitem.icon %>"></i><%= menuitem.title %></a>
   </li>
 <% }); %>
