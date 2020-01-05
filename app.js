@@ -2,10 +2,12 @@ const dotenv = require("dotenv");
 const express = require("express");
 const mysql = require("mysql");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
 const app = express();
+app.use(cookieParser());
 app.set("view engine", "ejs");
 
 const port = process.env.PORT || 2300;
