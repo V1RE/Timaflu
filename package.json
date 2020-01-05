@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/V1RE/Timaflu#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.4",
     "del": "^5.1.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",

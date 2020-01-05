@@ -17,4 +17,9 @@ $(document).ready(function() {
     Cookies.set("closed", !Cookies.getJSON("closed"));
     $(".wrapper").toggleClass("closed");
   });
+
+  $(".medewerkerlogin").click(function(e) {
+    Cookies.set("medewerkerID", $(this).data("medewerkerid"));
+    window.location.href = "/";
+  });
 });
