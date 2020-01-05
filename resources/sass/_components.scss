@@ -168,7 +168,7 @@
 
 // Main
 main {
-  background: radial-gradient(red, blue);
+  background-color: $light-bg;
   height: 200vh;
   margin-left: 275px;
   width: calc(100% - 275px);
