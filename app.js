@@ -56,3 +56,9 @@ var menu = [
   { href: "/facturering", title: "Facturering", icon: "trending-up" },
   { href: "/magazijn", title: "Magazijn", icon: "package" }
 ];
+
+function getMedewerkers(next) {
+  db.query("select * from nmentink_db2.werknemer", function(err, res) {
+    next(res);
+  });
+}
