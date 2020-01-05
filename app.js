@@ -32,12 +32,52 @@ app.listen(port, () => {
 
 app.use("/public", express.static(__dirname + "/public"));
 
+app.use("/login", function(req, res, next) {
+  next();
+});
+
+app.use(/^\/(?!login).*/, function(req, res, next) {
+  console.log(req.cookies);
+  console.log(req.url);
+
+  var medewerkerID = req.cookies.medewerkerID;
+  if (medewerkerID === undefined) {
+    res.redirect("/login");
+  } else {
+    console.log(medewerkerID);
+    next();
+  }
+});
+
+// Login
+app.get("/login", (req, res) => {
+  getMedewerkers(function(medewerkers) {
+    res.render("login", {
+      title: "Timaflu - Login",
+      medewerkers: medewerkers
+    });
+  });
+});
+
 // Page rendering
 app.get("/", (req, res) => {
-  res.render("index", {
-    title: "Timaflu - Overzicht",
-    menu: menu,
-    active: path.normalize(req.path)
+  getMedewerkers(function(medewerkers) {
+    curmedewerker = medewerkers.find(function(findmw) {
+      return findmw.idWerknemer == req.cookies.medewerkerID;
+    });
+
+    if (!curmedewerker) {
+      res.clearCookie("medewerkerID");
+      res.redirect("/login");
+    } else {
+      res.render("index", {
+        title: "Timaflu - Overzicht",
+        menu: menu,
+        active: path.normalize(req.path),
+        medewerkers: medewerkers,
+        curmedewerker: curmedewerker
+      });
+    }
   });
 });
 

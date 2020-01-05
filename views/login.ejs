@@ -1,0 +1,11 @@
+<%- include('partials/head.ejs') -%>
+
+<div class="loginwrapper">
+  <ul>
+    <% medewerkers.forEach(medewerker => { %>
+      <li class="medewerkerlogin" data-medewerkerid="<%- medewerker.idWerknemer -%>"><%= medewerker.Voornaam %> <%= medewerker.Achternaam %></li>
+    <% }); %>
+  </ul>
+</div>
+
+<%- include('partials/foot.ejs') -%>
