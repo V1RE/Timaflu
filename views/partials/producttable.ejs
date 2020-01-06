@@ -4,17 +4,17 @@
       <th>Artikelnummer</th>
       <th>Productnaam</th>
       <th>Voorraad</th>
-      <th>Minimum voorraad</th>
+      <th>Bezettings graad</th>
     </tr>
   </thead>
   <tbody>
     <% products.forEach(product => { %>
-      <tr data-productid="<%= product.idProduct -%>">
-        <td><%= product.Artikelnummer -%></td>
-        <td><%= product.Productnaam.toLowerCase(); -%></td>
-        <td><%= product.Voorraad -%></td>
-        <td><%= product.MinVoorraad -%></td>
-      </tr>
+    <tr data-productid="<%= product.idProduct -%>">
+      <td><%= product.Artikelnummer -%></td>
+      <td><%= product.Productnaam.toLowerCase(); -%></td>
+      <td><%= product.Voorraad -%></td>
+      <td><%= product.BezettingsGraad -%>%</td>
+    </tr>
     <% }); %>
   </tbody>
 </table>
