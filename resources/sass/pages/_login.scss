@@ -1,5 +1,14 @@
 .medewerkerlogin {
-    padding: 5px;
-    text-decoration: none;
-    cursor: pointer;
+  padding: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.login {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.loginwrapper {
+  margin: auto;
 }
