@@ -3,6 +3,15 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  margin: 12px 0;
+
+  &:first-of-type {
+    margin-top: 24px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 24px;
+  }
 }
 
 .column {
@@ -10,4 +19,29 @@
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
+  margin: 0 12px;
+  max-width: calc(100% - 48px);
+
+  &:first-of-type {
+    margin-left: 24px;
+  }
+
+  &:last-of-type {
+    margin-right: 24px;
+  }
+}
+
+.card {
+  background: #fafafa;
+  box-shadow: 0px 19px 38px rgba(0, 0, 0, 0.3),
+    0px 15px 12px rgba(0, 0, 0, 0.22);
+  border-radius: 2px;
+  padding: 20px 24px;
+  max-height: calc(100vh - 88px);
+}
+
+.scroll {
+  max-width: 100%;
+  max-height: inherit;
+  overflow: scroll;
 }
