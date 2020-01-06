@@ -6,8 +6,73 @@
   <div class="row">
     <div class="column">
       <div class="card">
-        <h1><a href="/inkoop"><i data-feather="arrow-left-circle"></i></a><%= product.Productnaam -%><span class="artnum"><%= product.Artikelnummer -%></span></h1>
+        <h1><a href="/inkoop"><i data-feather="arrow-left-circle"></i></a><%= product.Productnaam -%><span
+            class="artnum"><%= product.Artikelnummer -%></span></h1>
         <p class="beschrijving"><%= product.Lange_omschrijving -%></p>
+        <div class="voorraad">
+          <canvas id="voorraadchart"></canvas>
+        </div>
+        <script>
+
+          var barChartData = {
+            labels: ['<%= product.Productnaam -%>'],
+            datasets: [
+              //   {
+              //   label: 'Minimum voorraad',
+              //   backgroundColor: "#383d3b",
+              //   data: [
+              //     <%= product.Minimum_voorraad -%>
+              //   ]
+              // }, 
+              {
+                label: "Huidige voorraad",
+                backgroundColor: "#46ccd6",
+                data: [
+                <%= product.Huidige_voorraad -%>
+              ]
+              }
+              // , {
+              //   label: "Maximale voorraad",
+              //   backgroundColor: "#92dce5",
+              //   data: [
+              //     <%= product.Maximum_voorraad -%>
+              //   ]
+              // }
+            ]
+
+          };
+          window.onload = function () {
+            var ctx = document.getElementById('voorraadchart');
+            window.myBar = new Chart(ctx, {
+              type: 'bar',
+              data: barChartData,
+              options: {
+                title: {
+                  display: true,
+                  text: 'Voorraad <%= product.Productnaam -%>'
+                },
+                tooltips: {
+                  mode: 'index',
+                  intersect: false
+                },
+                responsive: true,
+                aspectRatio: 0.8,
+                scales: {
+                  xAxes: [{
+                    stacked: true,
+                  }],
+                  yAxes: [{
+                    stacked: false,
+                    ticks: {
+                      suggestedMin: <%= product.Minimum_voorraad -%>,
+                      suggestedMax: <%= product.Maximum_voorraad -%>
+                    }
+                  }]
+                }
+              }
+            });
+          };
+        </script>
       </div>
     </div>
   </div>
