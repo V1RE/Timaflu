@@ -59,7 +59,7 @@ gulp.task("cookies", function() {
 
 gulp.task("charts", function() {
   return gulp
-    .src("./node_modules/chart.js")
+    .src("./node_modules/chart.js/dist/Chart.js")
     .pipe(uglify())
     .pipe(gulp.dest("./public/build/js"));
 });
