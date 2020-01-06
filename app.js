@@ -130,9 +130,9 @@ function getProducts(next) {
 function getProduct(idProduct, next) {
   if (idProduct.match(/^[0-9]*$/)) {
     db.query(
-      "SELECT p.Productnaam, p.Artikelnummer, p.Lange_omschrijving, p.Korte_omschrijving, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, v.Huidige_voorraad, v.Maximum_voorraad, v.Minimum_voorraad FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct WHERE p.idProduct = " +
+      "SELECT p.Productnaam, p.Artikelnummer, p.Lange_omschrijving, p.Korte_omschrijving, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, v.Huidige_voorraad, v.Maximum_voorraad, v.Minimum_voorraad, ig.Datum, ig.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct inner join nmentink_db2.inkoopgeschiedenis as ig on ig.idProduct = p.idProduct inner join nmentink_db2.fabrikant as f on f.idFabrikant = ig.idFabrikant WHERE p.idProduct = " +
         idProduct +
-        ";",
+        " order by ig.Datum desc limit 1;",
       function(err, res) {
         next(res);
       }
