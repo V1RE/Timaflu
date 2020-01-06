@@ -120,7 +120,7 @@ function getMedewerkers(next) {
 
 function getProducts(next) {
   db.query(
-    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, p.idProduct FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct;",
+    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct;",
     function(err, res) {
       next(res);
     }
