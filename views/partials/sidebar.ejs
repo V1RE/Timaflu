@@ -2,17 +2,19 @@
   <div class="header">
     <div class="profilepicture"></div>
     <div class="profileswitcher">
-      <a href="#" class="curprofile">Martha de Vries<i data-feather="chevron-down"></i></a>
+      <a href="#" class="curprofile"><%= data.curmedewerker.Voornaam %> <%= data.curmedewerker.Achternaam %><i data-feather="user-x" class="logout"></i></a>
     </div>
   </div>
-  <div class="sidebarcontent">
-    <nav>
-      <ul class="sidebarmenu">
-        <%- include('menu') %>
-      </ul>
-    </nav>
-  </div>
-  <div class="bottom-icons">
-    <i data-feather="sidebar" class="sidebartoggle"></i>
+  <div class="sidebarscroll">
+    <div class="sidebarcontent">
+      <nav>
+        <ul class="sidebarmenu">
+          <%- include('menu') %>
+        </ul>
+      </nav>
+    </div>
+    <div class="bottom-icons">
+      <i data-feather="sidebar" class="sidebartoggle"></i>
+    </div>
   </div>
 </aside>

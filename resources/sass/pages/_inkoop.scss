@@ -1,0 +1,52 @@
+.inkoop {
+  .beschrijving {
+    font-size: 16px;
+    margin-top: 20px;
+
+    @media (max-width: 576px) {
+      font-size: 12px;
+      margin-top: 15px;
+    }
+  }
+
+  h1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    @media (max-width: 576px) {
+      font-size: 18px;
+      line-height: 24px;
+
+      .artnum {
+        &::before {
+          content: " (Artnum. ";
+        }
+
+        &::after {
+          content: ")";
+        }
+      }
+    }
+
+    @media (min-width: 576px) {
+      .artnum {
+        vertical-align: super;
+        color: #fff;
+        background: rgba($dark-bg, 0.5);
+        padding: 3px 5px;
+        border-radius: 13px;
+        margin-left: 10px;
+      }
+    }
+
+    .artnum {
+      font-size: 12px;
+      vertical-align: middle;
+    }
+
+    .feather {
+      margin-right: 10px;
+    }
+  }
+}

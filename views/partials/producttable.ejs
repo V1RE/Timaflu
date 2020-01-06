@@ -1,0 +1,18 @@
+<table class="producttable">
+  <thead>
+    <tr>
+      <th>Artikelnummer</th>
+      <th>Productnaam</th>
+      <th>Voorraad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.forEach(product => { %>
+      <tr data-productid="<%= product.idProduct -%>">
+        <td><%= product.Artikelnummer -%></td>
+        <td><%= product.Productnaam.toLowerCase(); -%></td>
+        <td><%= product.Voorraad -%></td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>

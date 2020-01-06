@@ -58,7 +58,7 @@
   min-width: 275px;
   width: 72px;
   z-index: 1;
-  min-height: 100vh;
+  min-height: 100%;
 
   .header {
     background-image: url("/public/images/sidebarheader.jpg");
@@ -107,6 +107,19 @@
     }
   }
 
+  .sidebarscroll {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 168px);
+    overflow-y: auto;
+    transition: all 1s;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .sidebarcontent {
     padding: $sidebar-spacing;
     font-family: $sidebar-font;
@@ -146,8 +159,6 @@
   }
 
   .bottom-icons {
-    position: absolute;
-    bottom: 0;
     padding: $sidebar-spacing;
     padding-top: 0;
     transition: all 1s;
@@ -158,6 +169,7 @@
       cursor: pointer;
       color: white;
       margin-right: $sidebar-spacing;
+      transition: all 1s;
 
       &:last-of-type {
         margin: 0;
@@ -168,8 +180,7 @@
 
 // Main
 main {
-  background: radial-gradient(red, blue);
-  height: 200vh;
+  min-height: 100%;
   margin-left: 275px;
   width: calc(100% - 275px);
   transition: all 1s;
@@ -177,7 +188,7 @@ main {
 
 .wrapper {
   display: flex;
-  height: 100vh;
+  height: 100%;
 
   &.closed {
     main {
@@ -200,6 +211,10 @@ main {
           margin: 0;
         }
       }
+
+      .sidebarscroll {
+        height: calc(100vh - 72px);
+      }
     }
   }
 
@@ -213,7 +228,7 @@ main {
 @media (max-width: 768px) {
   .wrapper {
     display: flex;
-    height: 100vh;
+    height: 100%;
 
     main {
       margin-left: 72px;
@@ -235,13 +250,17 @@ main {
           margin: 0;
         }
       }
+
+      .sidebarscroll {
+        height: calc(100vh - 72px);
+      }
     }
 
     &.closed {
       .sidebar {
         position: fixed;
         min-width: 100vw;
-        height: 100vh;
+        height: 100%;
 
         .header {
           padding: $sidebar-spacing;
@@ -254,6 +273,10 @@ main {
             min-height: $sidebar-spacing;
             margin-top: $sidebar-spacing;
           }
+        }
+
+        .sidebarscroll {
+          height: calc(100vh - 168px);
         }
       }
     }
@@ -268,20 +291,25 @@ main {
     }
 
     .sidebar {
+      -webkit-backface-visibility: hidden;
       position: fixed;
       left: -72px;
+      box-shadow: 0px 9px 18px rgba(0, 0, 0, 0), 0px 5.5px 5px rgba(0, 0, 0, 0);
 
       .bottom-icons {
         left: 72px;
         padding: 12px;
 
         .sidebartoggle {
+          position: absolute;
+          bottom: 12px;
+          left: 84px;
           background: $dark-bg;
           padding: 12px;
           border-radius: 100%;
           box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.18),
             0px 5.5px 5px rgba(0, 0, 0, 0.24);
-          transition: box-shadow 1s;
+          transition: all 1s;
         }
       }
     }
@@ -294,10 +322,16 @@ main {
           left: 0;
 
           .sidebartoggle {
+            left: 12px;
             box-shadow: 0px 9px 18px rgba(0, 0, 0, 0),
               0px 5.5px 5px rgba(0, 0, 0, 0);
           }
         }
+      }
+
+      main {
+        width: 100vw;
+        margin-left: 0;
       }
     }
   }
