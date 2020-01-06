@@ -1,0 +1,16 @@
+<%- include('partials/head.ejs') -%>
+
+<%- include('partials/sidebar.ejs') -%>
+
+<main>
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <h1><a href="/inkoop"><i data-feather="arrow-left-circle"></i></a><%= product.Productnaam -%><span class="artnum"><%= product.Artikelnummer -%></span></h1>
+        <p class="beschrijving"><%= product.Lange_omschrijving -%></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/foot.ejs') -%>

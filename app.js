@@ -85,9 +85,22 @@ app.get("/", (req, res) => {
 });
 
 app.get("/inkoop", (req, res) => {
-  res.render("inkoop", {
-    title: "Inkoop",
-    data: res.locals.data
+  getProducts(function(products) {
+    res.render("inkoop", {
+      title: "Inkoop",
+      data: res.locals.data,
+      products: products
+    });
+  });
+});
+
+app.get("/inkoop/:idProduct", function(req, res) {
+  getProduct(req.params.idProduct, function(product) {
+    res.render("inkoopproduct", {
+      title: "Inkoop",
+      data: res.locals.data,
+      product: product[0]
+    });
   });
 });
 
@@ -103,4 +116,28 @@ function getMedewerkers(next) {
   db.query("select * from nmentink_db2.werknemer", function(err, res) {
     next(res);
   });
+}
+
+function getProducts(next) {
+  db.query(
+    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, p.idProduct FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct;",
+    function(err, res) {
+      next(res);
+    }
+  );
+}
+
+function getProduct(idProduct, next) {
+  if (idProduct.match(/^[0-9]*$/)) {
+    db.query(
+      "SELECT p.Productnaam, p.Artikelnummer, p.Lange_omschrijving, p.Korte_omschrijving, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, v.Huidige_voorraad, v.Maximum_voorraad, v.Minimum_voorraad FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct WHERE p.idProduct = " +
+        idProduct +
+        ";",
+      function(err, res) {
+        next(res);
+      }
+    );
+  } else {
+    throw err;
+  }
 }

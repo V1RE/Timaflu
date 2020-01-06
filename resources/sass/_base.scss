@@ -127,6 +127,7 @@ table {
 body {
   font-family: $body-font;
   color: $body-font-color;
+  background-color: $light-bg;
 }
 
 h1,
@@ -137,4 +138,57 @@ h5,
 h6 {
   font-family: $header-font;
   color: $brand-primary;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+a {
+  color: inherit;
+}
+
+.feather {
+  vertical-align: middle;
+}
+
+table {
+  min-width: 100%;
+  font-size: 16px;
+
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
+
+  tr {
+    td,
+    th {
+      padding: 15px 10px;
+      white-space: nowrap;
+      text-align: left;
+    }
+  }
+
+  thead {
+    background-color: $dark-bg;
+    color: $brand-primary;
+    font-weight: 700;
+  }
+
+  tbody {
+    text-transform: capitalize;
+
+    tr {
+      cursor: pointer;
+
+      &:nth-child(odd) {
+        background-color: rgba($light-bg, 0.5);
+      }
+
+      &:hover {
+        background-color: $brand-primary !important;
+      }
+    }
+  }
 }
