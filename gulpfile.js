@@ -57,6 +57,13 @@ gulp.task("cookies", function() {
     .pipe(gulp.dest("./public/build/js"));
 });
 
+gulp.task("charts", function() {
+  return gulp
+    .src("./node_modules/chart.js")
+    .pipe(uglify())
+    .pipe(gulp.dest("./public/build/js"));
+});
+
 // Build task
 gulp.task(
   "build",
@@ -66,7 +73,8 @@ gulp.task(
     "jsCompress",
     "feather",
     "jquery",
-    "cookies"
+    "cookies",
+    "charts"
   )
 );
 
