@@ -27,12 +27,12 @@ $(document).ready(function() {
     window.location.href = "/";
   });
 
-  $(".producttable tr").click(function() {
+  $(".producttable tbody tr").click(function() {
     window.location.href = "/inkoop/" + $(this).data("productid");
   });
 
   $(".logout").click(function() {
     Cookies.remove("medewerkerID");
-    window.location.href = "/";
+    window.location.href = "/login";
   });
 });
