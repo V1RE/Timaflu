@@ -4,6 +4,7 @@
       <th>Artikelnummer</th>
       <th>Productnaam</th>
       <th>Voorraad</th>
+      <th>Minimum voorraad</th>
     </tr>
   </thead>
   <tbody>
@@ -12,6 +13,7 @@
         <td><%= product.Artikelnummer -%></td>
         <td><%= product.Productnaam.toLowerCase(); -%></td>
         <td><%= product.Voorraad -%></td>
+        <td><%= product.MinVoorraad -%></td>
       </tr>
     <% }); %>
   </tbody>
