@@ -29,6 +29,19 @@
   &:last-of-type {
     margin-right: 24px;
   }
+
+  @media (max-width: 576px) {
+    flex: auto;
+    margin: 12px 0;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .card {
@@ -37,11 +50,35 @@
     0px 15px 12px rgba(0, 0, 0, 0.22);
   border-radius: 2px;
   padding: 20px 24px;
-  max-height: calc(100vh - 88px);
+
+  .column {
+    margin: 0 12px;
+    max-width: 100%;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    @media (max-width: 576px) {
+      margin: 12px 0;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 
 .scroll {
   max-width: 100%;
-  max-height: inherit;
+  max-height: 80vh;
   overflow: scroll;
 }
