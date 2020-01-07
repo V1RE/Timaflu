@@ -1,0 +1,87 @@
+<%- include('partials/head.ejs') -%>
+
+<%- include('partials/sidebar.ejs') -%>
+
+<main>
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <h1><a href="/verkoop"><i data-feather="arrow-left-circle"></i></a><%= klant.Bedrijfsnaam -%></h1>
+        <form action="/verkoop" method="post" id="verkoopform">
+          <input type="hidden" name="idKlant" value="<%= klant.idBedrijf -%>">
+          <div class="row">
+            <h2>Verzend informatie</h2>
+          </div>
+          <div class="row">
+            <div class="column">
+              <label for="bedrijfsnaam">Bedrijfsnaam</label>
+              <input type="text" name="bedrijfsnaam" id="bedrijfsnaam" value="<%= klant.Bedrijfsnaam -%>">
+            </div>
+          </div>
+          <div class="row">
+            <div class="column">
+              <label for="adres">Adres</label>
+              <input type="text" name="adres" id="adres" value="<%= klant.Adres -%>">
+            </div>
+            <div class="column">
+              <label for="postcode">Postcode</label>
+              <input type="text" name="postcode" id="postcode" value="<%= klant.Postcode -%>">
+            </div>
+          </div>
+          <div class="row">
+            <div class="column">
+              <label for="plaats">Plaats</label>
+              <input type="text" name="plaats" id="plaats" value="<%= klant.Plaats -%>">
+            </div>
+            <div class="column">
+              <label for="land">Land</label>
+              <input type="text" name="land" id="land" value="<%= klant.Land -%>">
+            </div>
+          </div>
+          <div class="row">
+            <h2>Producten</h2>
+          </div>
+          <div class="row productlijn">
+            <div class="column">
+              <label for="product">Product</label>
+              <select name="product[]" id="product">
+                <% products.forEach(product => { %>
+                <option value="<%= product.idProduct -%>"><%= product.Productnaam -%></option>
+                <% }); %>
+              </select>
+            </div>
+            <div class="column">
+              <label for="amount">Aantal</label>
+              <input type="number" name="amount[]" id="amount" min="1" max="100000">
+            </div>
+          </div>
+          <div class="row">
+            <div class="addrow button">Rij toevoegen</div>
+          </div>
+          <div class="row">
+            <input type="submit" value="Plaats order">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="prodlijn">
+  <div class="row productlijn">
+    <div class="column">
+      <label for="product">Product</label>
+      <select name="product[]" id="product">
+        <% products.forEach(product => { %>
+        <option value="<%= product.idProduct -%>"><%= product.Productnaam -%></option>
+        <% }); %>
+      </select>
+    </div>
+    <div class="column">
+      <label for="amount">Aantal</label>
+      <input type="number" name="amount[]" id="amount" min="1" max="100000">
+    </div>
+  </div>
+</div>
+
+<%- include('partials/foot.ejs') -%>

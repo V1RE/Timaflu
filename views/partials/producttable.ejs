@@ -11,7 +11,7 @@
     <% products.forEach(product => { %>
     <tr data-productid="<%= product.idProduct -%>">
       <td><%= product.Artikelnummer -%></td>
-      <td><%= product.Productnaam.toLowerCase(); -%></td>
+      <td><%= product.Productnaam -%></td>
       <td><%= product.Voorraad -%></td>
       <td><%= product.BezettingsGraad -%>%</td>
     </tr>

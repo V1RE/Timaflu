@@ -145,8 +145,13 @@ h1 {
   line-height: 30px;
 }
 
+h2 {
+  font-size: 20px;
+}
+
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 .feather {
@@ -171,14 +176,17 @@ table {
   }
 
   thead {
-    background-color: $dark-bg;
     color: $brand-primary;
     font-weight: 700;
+
+    th {
+      background-color: $dark-bg;
+      position: sticky;
+      top: 0;
+    }
   }
 
   tbody {
-    text-transform: capitalize;
-
     tr {
       cursor: pointer;
 
@@ -192,4 +200,39 @@ table {
       }
     }
   }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba($dark-bg, 0.5);
+  border-radius: 0;
+  outline: none;
+  height: 2rem;
+  width: 100%;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: content-box;
+  transition: border 0.3s, -webkit-box-shadow 0.3s;
+  transition: box-shadow 0.3s, border 0.3s;
+  transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+  &:focus {
+    border-bottom: 1px solid $brand-primary;
+  }
+}
+
+select {
+  height: 20px;
+  margin: auto 0;
+}
+
+input[type="number"] {
+  width: 60px;
 }

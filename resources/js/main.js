@@ -35,4 +35,52 @@ $(document).ready(function() {
     Cookies.remove("medewerkerID");
     window.location.href = "/login";
   });
+
+  $(".klanttable th").click(function(e) {
+    var url = new URL(window.location.href);
+    url.searchParams.set("s", $(this).data("sort"));
+    if ($(this).data("order") == "asc") {
+      url.searchParams.set("o", "desc");
+    } else {
+      url.searchParams.set("o", "asc");
+    }
+    window.location.href = url;
+  });
+
+  $(".searchbar #zoekbalk").keypress(function(e) {
+    if (e.which == 13) {
+      searchKlant();
+      return false; //<---- Add this line
+    }
+  });
+
+  $(".searchverkoop").click(function(e) {
+    searchKlant();
+  });
+
+  $(".addrow").click(function(e) {
+    $("#verkoopform .productlijn")
+      .last()
+      .after($("#prodlijn").html());
+  });
+
+  setSort();
 });
+
+function setSort() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const order = urlParams.get("o") || "asc";
+  const sort = urlParams.get("s") || "k.Bedrijfsnaam";
+  const search = urlParams.get("q");
+
+  $(".klanttable th[data-sort='" + sort + "']")
+    .data("order", order)
+    .addClass("active");
+  $(".searchbar #zoekbalk").val(search);
+}
+
+function searchKlant() {
+  var url = new URL(window.location.href);
+  url.searchParams.set("q", $(".searchbar #zoekbalk").val());
+  window.location.href = url;
+}
