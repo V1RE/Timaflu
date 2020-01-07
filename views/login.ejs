@@ -3,7 +3,8 @@
 <div class="loginwrapper">
   <ul>
     <% medewerkers.forEach(medewerker => { %>
-      <li class="medewerkerlogin" data-medewerkerid="<%- medewerker.idWerknemer -%>"><%= medewerker.Voornaam %> <%= medewerker.Achternaam %></li>
+    <li class="medewerkerlogin" data-medewerkerid="<%- medewerker.idWerknemer -%>"><i
+        data-feather="user"></i><%= medewerker.Voornaam %> <%= medewerker.Achternaam %></li>
     <% }); %>
   </ul>
 </div>

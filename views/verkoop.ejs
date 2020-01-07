@@ -1,5 +1,20 @@
-<%- include('partials/head.ejs') -%> <%- include('partials/sidebar.ejs') -%>
+<%- include('partials/head.ejs') -%>
+<%- include('partials/sidebar.ejs') -%>
 
-<main></main>
+<main>
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <div class="searchbar">
+          <input type="text" placeholder="Zoeken..." id="zoekbalk">
+          <i data-feather="search" class="searchverkoop"></i>
+        </div>
+        <div class="scroll">
+          <%- include('partials/klanttable.ejs') -%>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
 <%- include('partials/foot.ejs') -%>

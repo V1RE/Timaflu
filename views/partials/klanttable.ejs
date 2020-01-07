@@ -1,0 +1,20 @@
+<table class="klanttable">
+  <thead>
+    <tr>
+      <th data-sort="k.Bedrijfsnaam">Bedrijf</th>
+      <th data-sort="k.Telefoonnummer">Telefoonnummer</th>
+      <th data-sort="c.Voornaam">Contactpersoon</th>
+      <th data-sort="c.Mailadres">Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% klanten.forEach(klant => { %>
+    <tr data-klantid="<%= klant.idKlant -%>">
+      <td><%= klant.Bedrijfsnaam -%></td>
+      <td><a href="tel:<%= klant.Telefoonnummer -%>">+<%= klant.Telefoonnummer -%></a></td>
+      <td><%= klant.Voornaam -%> <%= klant.Achternaam -%></td>
+      <td><a href="mailto:<%= klant.Mailadres -%>"><%= klant.Mailadres -%></a></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
