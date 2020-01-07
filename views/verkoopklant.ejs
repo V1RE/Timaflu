@@ -8,7 +8,7 @@
       <div class="card">
         <h1><a href="/verkoop"><i data-feather="arrow-left-circle"></i></a><%= klant.Bedrijfsnaam -%></h1>
         <form action="/verkoop" method="post" id="verkoopform">
-          <input type="hidden" name="idKlant" value="<%= klant.idBedrijf -%>">
+          <input type="hidden" name="idKlant" value="<%= klant.idKlant -%>">
           <div class="row">
             <h2>Verzend informatie</h2>
           </div>
@@ -52,7 +52,7 @@
             </div>
             <div class="column">
               <label for="amount">Aantal</label>
-              <input type="number" name="amount[]" id="amount" min="1" max="100000">
+              <input type="number" name="amount[]" id="amount" min="1" max="100000" required>
             </div>
           </div>
           <div class="row">
