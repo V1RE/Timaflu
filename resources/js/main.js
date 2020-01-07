@@ -31,6 +31,10 @@ $(document).ready(function() {
     window.location.href = "/inkoop/" + $(this).data("productid");
   });
 
+  $(".klanttable tbody tr").click(function() {
+    window.location.href = "/verkoop/" + $(this).data("klantid");
+  });
+
   $(".logout").click(function() {
     Cookies.remove("medewerkerID");
     window.location.href = "/login";
@@ -59,9 +63,19 @@ $(document).ready(function() {
   });
 
   $(".addrow").click(function(e) {
-    $("#verkoopform .productlijn")
-      .last()
-      .after($("#prodlijn").html());
+    if (
+      $("#verkoopform .productlijn #amount")
+        .last()
+        .val() > 0
+    ) {
+      $("#verkoopform .productlijn")
+        .last()
+        .after($("#prodlijn").html());
+    } else {
+      $("#verkoopform .productlijn #amount")
+        .last()
+        .focus();
+    }
   });
 
   setSort();

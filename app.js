@@ -16,7 +16,8 @@ const port = process.env.PORT || 2300;
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASS
+  password: process.env.DB_PASS,
+  multipleStatements: true
 });
 
 db.connect(err => {
@@ -128,8 +129,61 @@ app.get("/verkoop/:idKlant", function(req, res) {
 });
 
 app.post("/verkoop", function(req, res) {
-  console.log(req);
-  res.send("test");
+  console.log(req.body);
+  var huisnummer = "" + req.body.adres;
+  var d = new Date(),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+  db.query(
+    "INSERT INTO `nmentink_db2`.`bestelling` (`idklant`, `Datum`, `Bezorg_postcode`, `Bezorg_huisnummer`) VALUES ('" +
+      req.body.idKlant +
+      "', '" +
+      [year, month, day].join("-") +
+      "', '" +
+      req.body.postcode +
+      "', '" +
+      huisnummer.split(" ")[huisnummer.split(" ").length - 1] +
+      "');",
+    function(err, resp) {
+      var query =
+        "INSERT INTO `nmentink_db2`.`factuur` (`idBestelling`, `idWerknemer`, `Factuurdatum`, `Afleveradres`, `Betaaladres`) VALUES ('15', '" +
+        req.cookies.medewerkerID +
+        "', '" +
+        [year, month, day].join("-") +
+        "', '" +
+        req.body.postcode +
+        ", " +
+        req.body.adres +
+        "', '" +
+        req.body.postcode +
+        ", " +
+        req.body.adres +
+        "');";
+      for (let i = 0; i < req.body.product.length; i++) {
+        query +=
+          "INSERT INTO `nmentink_db2`.`bestelregel` (`idBestelling`, `idProduct`, `Aantal`) VALUES ('" +
+          resp.insertId +
+          "', '" +
+          req.body.product[i] +
+          "', '" +
+          req.body.amount[i] +
+          "'); UPDATE `nmentink_db2`.`voorraad` SET `Huidige_voorraad` = `Huidige_voorraad` - " +
+          req.body.amount[i] +
+          " WHERE (`idProduct` = '" +
+          req.body.product[i] +
+          "');";
+      }
+      db.query(query, function(err, responso) {
+        console.log(resp);
+        console.log(responso);
+        res.send("test");
+      });
+    }
+  );
 });
 
 var menu = [
