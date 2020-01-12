@@ -184,6 +184,13 @@ app.post("/verkoop", function(req, res) {
   );
 });
 
+app.get("/magazijn", (req, res) => {
+  res.render("magazijn", {
+    title: "Magazijn",
+    data: res.locals.data
+  });
+});
+
 var menu = [
   { href: "/", title: "Overzicht", icon: "activity" },
   { href: "/inkoop", title: "Inkoop", icon: "log-in" },
