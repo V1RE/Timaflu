@@ -141,12 +141,12 @@ function updatePrijs() {
   );
 
   $(".totaaleurokorting").text(
-    (totaalprijs / (100 + parseInt($("#korting").val()))).toLocaleString(
-      "en-US",
-      {
-        style: "currency",
-        currency: "EUR"
-      }
-    )
+    (
+      (totaalprijs * (100 - parseInt($("#korting").val()))) /
+      10000
+    ).toLocaleString("en-US", {
+      style: "currency",
+      currency: "EUR"
+    })
   );
 }
