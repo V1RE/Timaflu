@@ -94,14 +94,14 @@ app.get("/inkoop", (req, res) => {
 
 app.get("/inkoop/:idProduct", function(req, res) {
   getProduct(req.params.idProduct, function(product) {
-    getFabrikantenForProduct(product[0].Productnaam), function(fabrikanten){
+    getFabrikantenForProduct(product[0].Productnaam, function(fabrikanten) {
       res.render("inkoopproduct", {
         title: "Inkoop",
         data: res.locals.data,
         product: product[0],
         fabrikanten: fabrikanten
       });
-    }
+    });
   });
 });
 
@@ -253,7 +253,9 @@ function getKlanten(sort, order, search, next) {
 function getFabrikantenForProduct(productName, next) {
   db.query(
     "SELECT i.idProduct, p.Productnaam, i.Prijs, f.Bedrijfsnaam, p.Bestelcode FROM nmentink_db2.inkoopgeschiedenis as i JOIN nmentink_db2.product as p ON i.idProduct = p.idProduct JOIN nmentink_db2.fabrikant as f ON i.idFabrikant = f.idFabrikant WHERE p.Productnaam LIKE " +
-    "'%"+ productName +"%'group by Productnaam order by idProduct;",
+      "'%" +
+      productName +
+      "%'group by Productnaam order by idProduct;",
     function(err, res) {
       next(res);
     }
