@@ -204,7 +204,6 @@ function getProducts(next) {
   db.query(
     "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct, vg.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct left join nmentink_db2.verkoopgeschiedenis as vg on p.idProduct = vg.idProduct group by p.idProduct;",
     function(err, res) {
-      console.log(res);
       next(res);
     }
   );
@@ -227,7 +226,7 @@ function getProduct(idProduct, next) {
 
 function getKlanten(sort, order, search, next) {
   db.query(
-    "SELECT k.idKlant, k.Bedrijfsnaam, k.Telefoonnummer, c.Voornaam, c.Achternaam, c.Mailadres FROM nmentink_db2.klant as k inner join nmentink_db2.contactpersoon_klant as c on k.idKlant = c.idKlant where k.Bedrijfsnaam like '%" +
+    "SELECT k.idKlant, k.Bedrijfsnaam, k.Telefoonnummer, c.Voornaam, c.Achternaam, c.Mailadres FROM nmentink_db2.klant as k left join nmentink_db2.contactpersoon_klant as c on k.idKlant = c.idKlant where k.Bedrijfsnaam like '%" +
       search +
       "%' or k.Telefoonnummer like '%" +
       search +
@@ -257,6 +256,7 @@ function getKlant(idKlant, next) {
         idKlant +
         " group by k.idKlant limit 1;",
       function(err, res) {
+        console.log(res);
         next(res);
       }
     );
