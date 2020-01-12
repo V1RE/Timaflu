@@ -16,7 +16,8 @@ const port = process.env.PORT || 2300;
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASS
+  password: process.env.DB_PASS,
+  multipleStatements: true
 });
 
 db.connect(err => {
@@ -128,8 +129,61 @@ app.get("/verkoop/:idKlant", function(req, res) {
 });
 
 app.post("/verkoop", function(req, res) {
-  console.log(req);
-  res.send("test");
+  console.log(req.body);
+  var huisnummer = "" + req.body.adres;
+  var d = new Date(),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+  db.query(
+    "INSERT INTO `nmentink_db2`.`bestelling` (`idklant`, `Datum`, `Bezorg_postcode`, `Bezorg_huisnummer`) VALUES ('" +
+      req.body.idKlant +
+      "', '" +
+      [year, month, day].join("-") +
+      "', '" +
+      req.body.postcode +
+      "', '" +
+      huisnummer.split(" ")[huisnummer.split(" ").length - 1] +
+      "');",
+    function(err, resp) {
+      var query =
+        "INSERT INTO `nmentink_db2`.`factuur` (`idBestelling`, `idWerknemer`, `Factuurdatum`, `Afleveradres`, `Betaaladres`) VALUES ('15', '" +
+        req.cookies.medewerkerID +
+        "', '" +
+        [year, month, day].join("-") +
+        "', '" +
+        req.body.postcode +
+        ", " +
+        req.body.adres +
+        "', '" +
+        req.body.postcode +
+        ", " +
+        req.body.adres +
+        "');";
+      for (let i = 0; i < req.body.product.length; i++) {
+        query +=
+          "INSERT INTO `nmentink_db2`.`bestelregel` (`idBestelling`, `idProduct`, `Aantal`) VALUES ('" +
+          resp.insertId +
+          "', '" +
+          req.body.product[i] +
+          "', '" +
+          req.body.amount[i] +
+          "'); UPDATE `nmentink_db2`.`voorraad` SET `Huidige_voorraad` = `Huidige_voorraad` - " +
+          req.body.amount[i] +
+          " WHERE (`idProduct` = '" +
+          req.body.product[i] +
+          "');";
+      }
+      db.query(query, function(err, responso) {
+        console.log(resp);
+        console.log(responso);
+        res.send("test");
+      });
+    }
+  );
 });
 
 var menu = [
@@ -148,7 +202,7 @@ function getMedewerkers(next) {
 
 function getProducts(next) {
   db.query(
-    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct;",
+    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct, vg.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct left join nmentink_db2.verkoopgeschiedenis as vg on p.idProduct = vg.idProduct group by p.idProduct;",
     function(err, res) {
       next(res);
     }
@@ -172,7 +226,7 @@ function getProduct(idProduct, next) {
 
 function getKlanten(sort, order, search, next) {
   db.query(
-    "SELECT k.idKlant, k.Bedrijfsnaam, k.Telefoonnummer, c.Voornaam, c.Achternaam, c.Mailadres FROM nmentink_db2.klant as k inner join nmentink_db2.contactpersoon_klant as c on k.idKlant = c.idKlant where k.Bedrijfsnaam like '%" +
+    "SELECT k.idKlant, k.Bedrijfsnaam, k.Telefoonnummer, c.Voornaam, c.Achternaam, c.Mailadres FROM nmentink_db2.klant as k left join nmentink_db2.contactpersoon_klant as c on k.idKlant = c.idKlant where k.Bedrijfsnaam like '%" +
       search +
       "%' or k.Telefoonnummer like '%" +
       search +
@@ -196,10 +250,13 @@ function getKlanten(sort, order, search, next) {
 function getKlant(idKlant, next) {
   if (idKlant.match(/^[0-9]*$/)) {
     db.query(
-      "SELECT * FROM nmentink_db2.klant as k where k.idKlant = " +
+      "SELECT k.*, SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) AS Omzet, IF(SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) < 1000000, '5', IF(SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) < 2000000, '10', IF(SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) >= 2000000, '15', '0'))) AS Korting FROM nmentink_db2.klant AS k LEFT JOIN nmentink_db2.bestelling AS b ON k.idKlant = b.idKlant LEFT JOIN nmentink_db2.bestelregel AS br ON b.idBestelling = br.idBestelling LEFT JOIN nmentink_db2.product AS p ON br.idProduct = p.idProduct LEFT JOIN nmentink_db2.verkoopgeschiedenis AS vg ON p.idProduct = vg.idProduct WHERE (b.Datum > ADDDATE(CURDATE(), INTERVAL - 1 YEAR) AND k.idklant = " +
+        idKlant +
+        ") OR k.idklant = " +
         idKlant +
         " group by k.idKlant limit 1;",
       function(err, res) {
+        console.log(res);
         next(res);
       }
     );

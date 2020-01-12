@@ -31,6 +31,10 @@ $(document).ready(function() {
     window.location.href = "/inkoop/" + $(this).data("productid");
   });
 
+  $(".klanttable tbody tr").click(function() {
+    window.location.href = "/verkoop/" + $(this).data("klantid");
+  });
+
   $(".logout").click(function() {
     Cookies.remove("medewerkerID");
     window.location.href = "/login";
@@ -59,12 +63,30 @@ $(document).ready(function() {
   });
 
   $(".addrow").click(function(e) {
-    $("#verkoopform .productlijn")
-      .last()
-      .after($("#prodlijn").html());
+    if (
+      $("#verkoopform .productlijn #amount")
+        .last()
+        .val() > 0
+    ) {
+      $("#verkoopform .productlijn")
+        .last()
+        .after($("#prodlijn").html());
+      $("select, input").change(function() {
+        updatePrijs();
+      });
+    } else {
+      $("#verkoopform .productlijn #amount")
+        .last()
+        .focus();
+    }
+  });
+
+  $("select, input").change(function() {
+    updatePrijs();
   });
 
   setSort();
+  updatePrijs();
 });
 
 function setSort() {
@@ -83,4 +105,48 @@ function searchKlant() {
   var url = new URL(window.location.href);
   url.searchParams.set("q", $(".searchbar #zoekbalk").val());
   window.location.href = url;
+}
+
+function updatePrijs() {
+  var totaalprijs = 0;
+  $("#verkoopform .productlijn").each(function(index) {
+    $(this)
+      .find(".prijs")
+      .text(
+        (
+          ($(this)
+            .find("select>option:selected")
+            .data("prijs") *
+            $(this)
+              .find("#amount")
+              .val()) /
+          100
+        ).toLocaleString("en-US", { style: "currency", currency: "EUR" })
+      );
+
+    totaalprijs +=
+      $(this)
+        .find("select>option:selected")
+        .data("prijs") *
+      $(this)
+        .find("#amount")
+        .val();
+  });
+
+  $(".totaaleuro").text(
+    (totaalprijs / 100).toLocaleString("en-US", {
+      style: "currency",
+      currency: "EUR"
+    })
+  );
+
+  $(".totaaleurokorting").text(
+    (
+      (totaalprijs * (100 - parseInt($("#korting").val()))) /
+      10000
+    ).toLocaleString("en-US", {
+      style: "currency",
+      currency: "EUR"
+    })
+  );
 }

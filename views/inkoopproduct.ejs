@@ -15,7 +15,6 @@
         <script>
 
           var barChartData = {
-            labels: ['<%= product.Productnaam -%>'],
             datasets: [
               //   {
               //   label: 'Minimum voorraad',
@@ -26,10 +25,23 @@
               // }, 
               {
                 label: "Huidige voorraad",
-                backgroundColor: "#46ccd6",
+                backgroundColor: ["#46ccd6","#46ccd6","#46ccd6"],
                 data: [
-                <%= product.Huidige_voorraad -%>
-              ]
+                  0,
+                  <%= product.Huidige_voorraad -%>,
+                  0
+                ],
+                order: 2
+              },
+              {
+                label: "Minimale voorraad",
+                data: [
+                  <%= product.Minimum_voorraad -%>,
+                  <%= product.Minimum_voorraad -%>,
+                  <%= product.Minimum_voorraad -%>
+                ],
+                type: 'line',
+                order: 1
               }
               // , {
               //   label: "Maximale voorraad",
@@ -38,8 +50,8 @@
               //     <%= product.Maximum_voorraad -%>
               //   ]
               // }
-            ]
-
+            ],
+            labels: ['', 'Voorraad <%= product.Productnaam -%>', '']
           };
           window.onload = function () {
             var ctx = document.getElementById('voorraadchart');
@@ -64,7 +76,7 @@
                   yAxes: [{
                     stacked: false,
                     ticks: {
-                      suggestedMin: <%= product.Minimum_voorraad -%>,
+                      suggestedMin: 0,
                       suggestedMax: <%= product.Maximum_voorraad -%>
                     }
                   }]
