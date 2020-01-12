@@ -178,12 +178,17 @@ app.post("/verkoop", function(req, res) {
           "');";
       }
       db.query(query, function(err, responso) {
-        console.log(resp);
-        console.log(responso);
-        res.send("test");
+        res.redirect("/verkoop");
       });
     }
   );
+});
+
+app.get("/magazijn", (req, res) => {
+  res.render("magazijn", {
+    title: "Magazijn",
+    data: res.locals.data
+  });
 });
 
 var menu = [
