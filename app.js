@@ -178,9 +178,7 @@ app.post("/verkoop", function(req, res) {
           "');";
       }
       db.query(query, function(err, responso) {
-        console.log(resp);
-        console.log(responso);
-        res.send("test");
+        res.redirect("/verkoop");
       });
     }
   );
