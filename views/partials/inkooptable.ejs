@@ -1,0 +1,22 @@
+<table class="inkooptable">
+  <thead>
+    <tr>
+      <th>Prijs</th>
+      <th>Leverancier</th>
+      <th>Bestelcode</th>
+      <th>Aantal</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% fabrikanten.forEach(fabrikant => { %>
+    <tr data-productid="<%= product.idProduct -%>">
+      <td><%= fabrikant.Prijs -%></td>
+      <td><%= fabrikant.Bedrijfsnaam -%></td>
+      <td><%= fabrikant.Bestelcode -%></td>
+      <td>aantal</td>
+      <td><button>Kopen</button></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>

@@ -4,6 +4,7 @@
       <th>Artikelnummer</th>
       <th>Productnaam</th>
       <th>Voorraad</th>
+      <th>Minimale voorraad</th>
       <th>Bezettings graad</th>
     </tr>
   </thead>
@@ -13,6 +14,7 @@
       <td><%= product.Artikelnummer -%></td>
       <td><%= product.Productnaam -%></td>
       <td><%= product.Voorraad -%></td>
+      <td><%= product.MinVoorraad -%></td>
       <td><%= product.BezettingsGraad -%>%</td>
     </tr>
     <% }); %>

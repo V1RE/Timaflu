@@ -9,85 +9,96 @@
         <h1><a href="/inkoop"><i data-feather="arrow-left-circle"></i></a><%= product.Productnaam -%><span
             class="artnum"><%= product.Artikelnummer -%></span></h1>
         <p class="beschrijving"><%= product.Lange_omschrijving -%></p>
-        <div class="voorraad">
-          <canvas id="voorraadchart"></canvas>
+        <div class="row">
+          <div class="column">
+            <h2>Voorraad</h2>
+            <div class="voorraad">
+              <canvas id="voorraadchart"></canvas>
+            </div>
+          </div>
+          <div class="column">
+            <h2>Inkopen</h2>
+            <div class="scroll">
+              <%- include('partials/inkooptable.ejs') -%>
+            </div>
+          </div>
         </div>
-        <script>
-
-          var barChartData = {
-            datasets: [
-              //   {
-              //   label: 'Minimum voorraad',
-              //   backgroundColor: "#383d3b",
-              //   data: [
-              //     <%= product.Minimum_voorraad -%>
-              //   ]
-              // }, 
-              {
-                label: "Huidige voorraad",
-                backgroundColor: ["#46ccd6","#46ccd6","#46ccd6"],
-                data: [
-                  0,
-                  <%= product.Huidige_voorraad -%>,
-                  0
-                ],
-                order: 2
-              },
-              {
-                label: "Minimale voorraad",
-                data: [
-                  <%= product.Minimum_voorraad -%>,
-                  <%= product.Minimum_voorraad -%>,
-                  <%= product.Minimum_voorraad -%>
-                ],
-                type: 'line',
-                order: 1
-              }
-              // , {
-              //   label: "Maximale voorraad",
-              //   backgroundColor: "#92dce5",
-              //   data: [
-              //     <%= product.Maximum_voorraad -%>
-              //   ]
-              // }
-            ],
-            labels: ['', 'Voorraad <%= product.Productnaam -%>', '']
-          };
-          window.onload = function () {
-            var ctx = document.getElementById('voorraadchart');
-            window.myBar = new Chart(ctx, {
-              type: 'bar',
-              data: barChartData,
-              options: {
-                title: {
-                  display: true,
-                  text: 'Voorraad <%= product.Productnaam -%>'
-                },
-                tooltips: {
-                  mode: 'index',
-                  intersect: false
-                },
-                responsive: true,
-                aspectRatio: 0.8,
-                scales: {
-                  xAxes: [{
-                    stacked: true,
-                  }],
-                  yAxes: [{
-                    stacked: false,
-                    ticks: {
-                      suggestedMin: 0,
-                      suggestedMax: <%= product.Maximum_voorraad -%>
-                    }
-                  }]
-                }
-              }
-            });
-          };
-        </script>
       </div>
     </div>
   </div>
 </main>
+
+<script>
+  var barChartData = {
+    datasets: [
+      //   {
+      //   label: 'Minimum voorraad',
+      //   backgroundColor: "#383d3b",
+      //   data: [
+      //     <%= product.Minimum_voorraad -%>
+      //   ]
+      // }, 
+      {
+        label: "Huidige voorraad",
+        backgroundColor: ["#46ccd6","#46ccd6","#46ccd6"],
+        data: [
+          0,
+          <%= product.Huidige_voorraad -%>,
+          0
+        ],
+        order: 2
+      },
+      {
+        label: "Minimale voorraad",
+        data: [
+          <%= product.Minimum_voorraad -%>,
+          <%= product.Minimum_voorraad -%>,
+          <%= product.Minimum_voorraad -%>
+        ],
+        type: 'line',
+        order: 1
+      }
+      // , {
+      //   label: "Maximale voorraad",
+      //   backgroundColor: "#92dce5",
+      //   data: [
+      //     <%= product.Maximum_voorraad -%>
+      //   ]
+      // }
+    ],
+    labels: ['', 'Voorraad <%= product.Productnaam -%>', '']
+  };
+  window.onload = function () {
+    var ctx = document.getElementById('voorraadchart');
+    window.myBar = new Chart(ctx, {
+      type: 'bar',
+      data: barChartData,
+      options: {
+        title: {
+          display: true,
+          text: 'Voorraad <%= product.Productnaam -%>'
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false
+        },
+        responsive: true,
+        aspectRatio: 0.8,
+        scales: {
+          xAxes: [{
+            stacked: true,
+          }],
+          yAxes: [{
+            stacked: false,
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: <%= product.Maximum_voorraad -%>
+            }
+          }]
+        }
+      }
+    });
+  };
+</script>
 
 <%- include('partials/foot.ejs') -%>
