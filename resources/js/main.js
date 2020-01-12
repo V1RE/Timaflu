@@ -121,7 +121,7 @@ function updatePrijs() {
               .find("#amount")
               .val()) /
           100
-        ).toLocaleString("en-US", { style: "currency", currency: "EUR" })
+        ).toLocaleString("nl", { style: "currency", currency: "EUR" })
       );
 
     totaalprijs +=
@@ -134,7 +134,7 @@ function updatePrijs() {
   });
 
   $(".totaaleuro").text(
-    (totaalprijs / 100).toLocaleString("en-US", {
+    (totaalprijs / 100).toLocaleString("nl", {
       style: "currency",
       currency: "EUR"
     })
@@ -144,7 +144,7 @@ function updatePrijs() {
     (
       (totaalprijs * (100 - parseInt($("#korting").val()))) /
       10000
-    ).toLocaleString("en-US", {
+    ).toLocaleString("nl", {
       style: "currency",
       currency: "EUR"
     })
