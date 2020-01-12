@@ -46,7 +46,7 @@
               <label for="product">Product</label>
               <select name="product[]" id="product">
                 <% products.forEach(product => { %>
-                <option value="<%= product.idProduct -%>"><%= product.Productnaam -%></option>
+                <option value="<%= product.idProduct -%>" data-prijs="<%= parseInt(product.Prijs) -%>"><%= product.Productnaam -%> (<%= (parseInt(product.Prijs) / 100).toLocaleString("en-US", {style:"currency", currency:"EUR"}) -%>)</option>
                 <% }); %>
               </select>
             </div>

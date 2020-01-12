@@ -202,8 +202,9 @@ function getMedewerkers(next) {
 
 function getProducts(next) {
   db.query(
-    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct;",
+    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct, vg.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct left join nmentink_db2.verkoopgeschiedenis as vg on p.idProduct = vg.idProduct group by p.idProduct;",
     function(err, res) {
+      console.log(res);
       next(res);
     }
   );
@@ -250,7 +251,9 @@ function getKlanten(sort, order, search, next) {
 function getKlant(idKlant, next) {
   if (idKlant.match(/^[0-9]*$/)) {
     db.query(
-      "SELECT * FROM nmentink_db2.klant as k where k.idKlant = " +
+      "SELECT k.*, SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) AS Omzet, IF(SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) < 1000000, '5', IF(SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) < 2000000, '10', IF(SUM(br.Aantal * (SELECT vg.Prijs FROM nmentink_db2.verkoopgeschiedenis AS vg WHERE vg.Datum < b.Datum AND vg.idProduct = p.idProduct ORDER BY vg.Datum DESC LIMIT 1)) >= 2000000, '15', '0'))) AS Korting FROM nmentink_db2.klant AS k LEFT JOIN nmentink_db2.bestelling AS b ON k.idKlant = b.idKlant LEFT JOIN nmentink_db2.bestelregel AS br ON b.idBestelling = br.idBestelling LEFT JOIN nmentink_db2.product AS p ON br.idProduct = p.idProduct LEFT JOIN nmentink_db2.verkoopgeschiedenis AS vg ON p.idProduct = vg.idProduct WHERE (b.Datum > ADDDATE(CURDATE(), INTERVAL - 1 YEAR) AND k.idklant = " +
+        idKlant +
+        ") OR k.idklant = " +
         idKlant +
         " group by k.idKlant limit 1;",
       function(err, res) {
