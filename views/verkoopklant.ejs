@@ -9,6 +9,7 @@
         <h1><a href="/verkoop"><i data-feather="arrow-left-circle"></i></a><%= klant.Bedrijfsnaam -%></h1>
         <form action="/verkoop" method="post" id="verkoopform">
           <input type="hidden" name="idKlant" value="<%= klant.idKlant -%>">
+          <input type="hidden" name="korting" id="korting" value="<%= klant.Korting -%>">
           <div class="row">
             <h2>Verzend informatie</h2>
           </div>
@@ -46,18 +47,27 @@
               <label for="product">Product</label>
               <select name="product[]" id="product">
                 <% products.forEach(product => { %>
-                <option value="<%= product.idProduct -%>"><%= product.Productnaam -%></option>
+                <option value="<%= product.idProduct -%>" data-prijs="<%= parseInt(product.Prijs) -%>"><%= product.Productnaam -%> (<%= (parseInt(product.Prijs) / 100).toLocaleString("nl", {style:"currency", currency:"EUR"}) -%>)</option>
                 <% }); %>
               </select>
             </div>
             <div class="column">
               <label for="amount">Aantal</label>
               <input type="number" name="amount[]" id="amount" min="1" max="100000" required>
+              <span class="prijs">€0.00</span>
             </div>
           </div>
           <div class="row">
             <div class="addrow button">Rij toevoegen</div>
           </div>
+          <div class="row">
+            <div class="column">
+              <h3 class="totaalprijs">Totaal: <span class="totaaleuro">€0.00</span></h3>
+            </div>
+            <div class="column">
+              <h3 class="totaalprijs">Totaal met <%= klant.Korting -%>% korting: <span class="totaaleurokorting">€0.00</span></h3>
+            </div>
+            </div>
           <div class="row">
             <input type="submit" value="Plaats order">
           </div>
@@ -73,13 +83,14 @@
       <label for="product">Product</label>
       <select name="product[]" id="product">
         <% products.forEach(product => { %>
-        <option value="<%= product.idProduct -%>"><%= product.Productnaam -%></option>
+        <option value="<%= product.idProduct -%>" data-prijs="<%= parseInt(product.Prijs) -%>"><%= product.Productnaam -%> (<%= (parseInt(product.Prijs) / 100).toLocaleString("nl", {style:"currency", currency:"EUR"}) -%>)</option>
         <% }); %>
       </select>
     </div>
     <div class="column">
       <label for="amount">Aantal</label>
-      <input type="number" name="amount[]" id="amount" min="1" max="100000">
+      <input type="number" name="amount[]" id="amount" min="1" max="100000" required>
+      <span class="prijs"></span>
     </div>
   </div>
 </div>

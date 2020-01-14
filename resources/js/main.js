@@ -71,6 +71,9 @@ $(document).ready(function() {
       $("#verkoopform .productlijn")
         .last()
         .after($("#prodlijn").html());
+      $("select, input").change(function() {
+        updatePrijs();
+      });
     } else {
       $("#verkoopform .productlijn #amount")
         .last()
@@ -78,7 +81,12 @@ $(document).ready(function() {
     }
   });
 
+  $("select, input").change(function() {
+    updatePrijs();
+  });
+
   setSort();
+  updatePrijs();
 });
 
 function setSort() {
@@ -97,4 +105,48 @@ function searchKlant() {
   var url = new URL(window.location.href);
   url.searchParams.set("q", $(".searchbar #zoekbalk").val());
   window.location.href = url;
+}
+
+function updatePrijs() {
+  var totaalprijs = 0;
+  $("#verkoopform .productlijn").each(function(index) {
+    $(this)
+      .find(".prijs")
+      .text(
+        (
+          ($(this)
+            .find("select>option:selected")
+            .data("prijs") *
+            $(this)
+              .find("#amount")
+              .val()) /
+          100
+        ).toLocaleString("nl", { style: "currency", currency: "EUR" })
+      );
+
+    totaalprijs +=
+      $(this)
+        .find("select>option:selected")
+        .data("prijs") *
+      $(this)
+        .find("#amount")
+        .val();
+  });
+
+  $(".totaaleuro").text(
+    (totaalprijs / 100).toLocaleString("nl", {
+      style: "currency",
+      currency: "EUR"
+    })
+  );
+
+  $(".totaaleurokorting").text(
+    (
+      (totaalprijs * (100 - parseInt($("#korting").val()))) /
+      10000
+    ).toLocaleString("nl", {
+      style: "currency",
+      currency: "EUR"
+    })
+  );
 }
