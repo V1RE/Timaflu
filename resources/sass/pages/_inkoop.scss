@@ -9,14 +9,14 @@
     }
   }
 
-  .voorraad {
-    width: 50%;
-    margin-top: 20px;
+  // .voorraad {
+  //   width: 50%;
+  //   margin-top: 20px;
 
-    @media (max-width: 576px) {
-      width: 100%;
-    }
-  }
+  //   @media (max-width: 576px) {
+  //     width: 100%;
+  //   }
+  // }
 
   h1 {
     white-space: nowrap;
@@ -57,5 +57,16 @@
     .feather {
       margin-right: 10px;
     }
+  }
+}
+
+td.teweinig {
+  color: red;
+  font-weight: 900;
+
+  svg {
+    height: 13px;
+    width: 13px;
+    vertical-align: baseline;
   }
 }

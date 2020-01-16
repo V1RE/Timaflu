@@ -16,6 +16,7 @@
 
 .column {
   display: flex;
+  float: left;
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
