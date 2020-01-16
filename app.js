@@ -194,6 +194,13 @@ app.get("/magazijn", (req, res) => {
   });
 });
 
+app.get("/facturering", (req, res) => {
+  res.render("facturering", {
+    title: "Facturering",
+    data: res.locals.data
+  });
+});
+
 var menu = [
   { href: "/", title: "Overzicht", icon: "activity" },
   { href: "/inkoop", title: "Inkoop", icon: "log-in" },
