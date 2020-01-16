@@ -13,7 +13,11 @@
     <tr data-productid="<%= product.idProduct -%>">
       <td><%= product.Artikelnummer -%></td>
       <td><%= product.Productnaam -%></td>
-      <td><%= product.Voorraad -%></td>
+      <% if (product.Voorraad < product.MinVoorraad) { %>
+        <td class="teweinig"><%= product.Voorraad -%> <i data-feather="alert-triangle"></i></td>
+      <% } else { %>
+        <td><%= product.Voorraad -%></td>
+      <% } %>
       <td><%= product.MinVoorraad -%></td>
       <td><%= product.BezettingsGraad -%>%</td>
     </tr>

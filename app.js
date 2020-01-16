@@ -210,7 +210,7 @@ function getMedewerkers(next) {
 
 function getProducts(next) {
   db.query(
-    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct, vg.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct left join nmentink_db2.verkoopgeschiedenis as vg on p.idProduct = vg.idProduct group by p.idProduct;",
+    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, v.Minimum_voorraad as MinVoorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct, vg.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct left join nmentink_db2.verkoopgeschiedenis as vg on p.idProduct = vg.idProduct group by p.idProduct;",
     function(err, res) {
       next(res);
     }
