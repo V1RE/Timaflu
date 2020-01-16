@@ -94,10 +94,13 @@ app.get("/inkoop", (req, res) => {
 
 app.get("/inkoop/:idProduct", function(req, res) {
   getProduct(req.params.idProduct, function(product) {
-    res.render("inkoopproduct", {
-      title: "Inkoop",
-      data: res.locals.data,
-      product: product[0]
+    getFabrikantenForProduct(product[0].Productnaam, function(fabrikanten) {
+      res.render("inkoopproduct", {
+        title: "Inkoop",
+        data: res.locals.data,
+        product: product[0],
+        fabrikanten: fabrikanten
+      });
     });
   });
 });
@@ -207,7 +210,7 @@ function getMedewerkers(next) {
 
 function getProducts(next) {
   db.query(
-    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct, vg.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct left join nmentink_db2.verkoopgeschiedenis as vg on p.idProduct = vg.idProduct group by p.idProduct;",
+    "SELECT p.Artikelnummer, p.Productnaam, v.Huidige_voorraad as Voorraad, v.Minimum_voorraad as MinVoorraad, ROUND((v.Huidige_voorraad / v.Maximum_voorraad) * 100) AS BezettingsGraad, p.idProduct, vg.Prijs FROM nmentink_db2.voorraad AS v INNER JOIN nmentink_db2.product AS p ON p.idProduct = v.idProduct left join nmentink_db2.verkoopgeschiedenis as vg on p.idProduct = vg.idProduct group by p.idProduct;",
     function(err, res) {
       next(res);
     }
@@ -246,6 +249,18 @@ function getKlanten(sort, order, search, next) {
       " " +
       order +
       ";",
+    function(err, res) {
+      next(res);
+    }
+  );
+}
+
+function getFabrikantenForProduct(productName, next) {
+  db.query(
+    "SELECT i.idProduct, p.Productnaam, i.Prijs, f.Bedrijfsnaam, p.Bestelcode FROM nmentink_db2.inkoopgeschiedenis as i JOIN nmentink_db2.product as p ON i.idProduct = p.idProduct JOIN nmentink_db2.fabrikant as f ON i.idFabrikant = f.idFabrikant WHERE p.Productnaam LIKE " +
+      "'%" +
+      productName +
+      "%'group by Productnaam order by idProduct;",
     function(err, res) {
       next(res);
     }
